@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { LoadingPage } from "@/components/ui/loading";
 
 const Home: NextPage = () => {
   const { toast } = useToast();
