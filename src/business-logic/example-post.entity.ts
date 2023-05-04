@@ -28,10 +28,10 @@ export default class ExamplePostEntity {
       userIdsFromPosts
     );
 
-    return posts.map((post) => this.mapPostToAuthor(post, users));
+    return posts.map((post) => this.mapAuthorToPost(post, users));
   }
 
-  private mapPostToAuthor(
+  private mapAuthorToPost(
     post: ExamplePost,
     users: AsyncReturnType<typeof ClerkUserEntity.prototype.listUsersForClient>
   ) {
