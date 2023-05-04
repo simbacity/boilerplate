@@ -1,7 +1,9 @@
 import ClerkUserEntity from "@/business-logic/clerk-user.entity";
 import { prisma } from "@/server/db";
 import { type ValidationSchemaForCreateExamplePost } from "@/validation-schemas/example-post.schema";
+import { type ExamplePost } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
+import { type AsyncReturnType } from "type-fest";
 
 export default class ExamplePostEntity {
   async create(userId: string, input: ValidationSchemaForCreateExamplePost) {
@@ -26,20 +28,25 @@ export default class ExamplePostEntity {
       userIdsFromPosts
     );
 
-    return posts.map((post) => {
-      const author = users.find((user) => user.id === post.authorId);
+    return posts.map((post) => this.mapPostToAuthor(post, users));
+  }
 
-      if (!author) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Author not found",
-        });
-      }
+  private mapPostToAuthor(
+    post: ExamplePost,
+    users: AsyncReturnType<typeof ClerkUserEntity.prototype.listUsersForClient>
+  ) {
+    const author = users.find((user) => user.id === post.authorId);
 
-      return {
-        post,
-        author,
-      };
-    });
+    if (!author) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Author not found",
+      });
+    }
+
+    return {
+      post,
+      author,
+    };
   }
 }

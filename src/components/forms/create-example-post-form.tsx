@@ -60,7 +60,7 @@ const CreateExamplePostForm = () => {
 
       <div>
         <Button type="submit" disabled={mutation.isLoading}>
-          {mutation.isLoading ? "Loading" : "Submit"}
+          {mutation.isLoading ? "Submitting" : "Submit"}
         </Button>
       </div>
     </form>
