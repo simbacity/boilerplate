@@ -24,15 +24,11 @@ const MyApp: AppType = ({ Component, pageProps }) => {
             logoPlacement: "outside",
           },
           variables: {
-            colorPrimary: "#d1d5db",
+            colorPrimary: "#9ca3af",
             borderRadius: "4px",
           },
           elements: {
-            card: "shadow-none border-slate-200 gap-1",
-            header: "pb-4",
-            footer: "pt-5",
-            footerActionLink: "text-slate-500 hover:text-slate-600",
-            headerSubtitle: "hidden",
+            card: "shadow-none border-slate-200 rounded-md",
           },
         }}
       >

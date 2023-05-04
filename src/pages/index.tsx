@@ -1,6 +1,5 @@
 import { type NextPage } from "next";
 
-import { SignInButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -10,15 +9,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { LoadingPage } from "@/components/ui/loading";
-import { Navigation } from "@/components/layout/navigation-homepage";
+import { NavigationHomepage } from "@/components/layout/navigation-homepage";
 
 const Home: NextPage = () => {
   const { toast } = useToast();
 
   return (
     <>
-      <Navigation />
+      <NavigationHomepage />
       <main>
         <Button
           onClick={() => {
