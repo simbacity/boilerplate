@@ -2,15 +2,18 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { handlePromise } from "@/lib/promise";
 import { Label } from "@/components/ui/label";
-import { type z } from "zod";
+import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/lib/api";
 import { useZodForm } from "@/hooks/use-zod-form";
 import { toast } from "@/components/ui/use-toast";
-import { validationSchema } from "@/components/forms/example-post/validation-schema";
+import {
+  type ValidationSchemaForCreateExamplePost,
+  validationSchemaForCreateExamplePost,
+} from "@/validation-schemas/example-post.schema";
 
 const CreateExamplePostForm = () => {
   const ctx = api.useContext();
-  const mutation = api.examplePost.add.useMutation({
+  const mutation = api.examplePost.create.useMutation({
     onSuccess: async () => {
       toast({
         description: "Your post has been saved.",
@@ -20,14 +23,14 @@ const CreateExamplePostForm = () => {
   });
 
   const form = useZodForm({
-    schema: validationSchema,
+    schema: validationSchemaForCreateExamplePost,
     defaultValues: {
       title: "",
       content: "",
     },
   });
 
-  const onSubmit = (data: z.TypeOf<typeof validationSchema>) => {
+  const onSubmit = (data: ValidationSchemaForCreateExamplePost) => {
     mutation.mutate(data);
     form.reset();
   };
@@ -47,7 +50,7 @@ const CreateExamplePostForm = () => {
 
       <div className="space-y-1">
         <Label htmlFor="content">Content</Label>
-        <Input id="content" {...form.register("content")} />
+        <Textarea id="content" {...form.register("content")} />
         {form.formState.errors.content?.message && (
           <p className="text-red-600">
             {form.formState.errors.content?.message}

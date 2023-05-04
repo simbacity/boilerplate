@@ -16,8 +16,6 @@
  */
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 
-import { prisma } from "@/server/db";
-
 /**
  * This is the actual context you will use in your router. It will be used to process every request
  * that goes through your tRPC endpoint.
@@ -26,12 +24,11 @@ import { prisma } from "@/server/db";
  */
 export const createTRPCContext = (opts: CreateNextContextOptions) => {
   const { req } = opts;
-  const sesh = getAuth(req);
+  const session = getAuth(req);
 
-  const userId = sesh.userId;
+  const userId = session.userId;
 
   return {
-    prisma,
     userId,
   };
 };

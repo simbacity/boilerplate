@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout/layout";
 import { type NextPage } from "next";
 import { api } from "@/lib/api";
-import { CreateExamplePostForm } from "@/components/forms/example-post/create-example-post-form";
+import { CreateExamplePostForm } from "@/components/forms/create-example-post-form";
 
 const CreatePost: NextPage = () => {
   const query = api.examplePost.list.useQuery();
