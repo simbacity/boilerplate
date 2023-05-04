@@ -15,7 +15,25 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <title>App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ClerkProvider {...pageProps}>
+      <ClerkProvider
+        {...pageProps}
+        appearance={{
+          layout: {
+            logoImageUrl: "/logo.svg",
+            socialButtonsVariant: "blockButton",
+            socialButtonsPlacement: "bottom",
+          },
+          variables: {
+            colorPrimary: "#d1d5db",
+            borderRadius: "4px",
+          },
+          elements: {
+            card: "shadow-none border-slate-200",
+            footerActionLink: "text-slate-500 hover:text-slate-600",
+            headerSubtitle: "hidden",
+          },
+        }}
+      >
         <Component {...pageProps} />
         <Toaster />
       </ClerkProvider>

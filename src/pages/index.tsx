@@ -11,12 +11,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { LoadingPage } from "@/components/ui/loading";
+import { Navigation } from "@/components/layout/navigation-homepage";
 
 const Home: NextPage = () => {
   const { toast } = useToast();
 
   return (
     <>
+      <Navigation />
       <main>
         <Button
           onClick={() => {
