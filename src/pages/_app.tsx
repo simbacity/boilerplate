@@ -21,14 +21,16 @@ const MyApp: AppType = ({ Component, pageProps }) => {
           layout: {
             logoImageUrl: "/logo.svg",
             socialButtonsVariant: "blockButton",
-            socialButtonsPlacement: "bottom",
+            logoPlacement: "outside",
           },
           variables: {
             colorPrimary: "#d1d5db",
             borderRadius: "4px",
           },
           elements: {
-            card: "shadow-none border-slate-200",
+            card: "shadow-none border-slate-200 gap-1",
+            header: "pb-4",
+            footer: "pt-5",
             footerActionLink: "text-slate-500 hover:text-slate-600",
             headerSubtitle: "hidden",
           },
