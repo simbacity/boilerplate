@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { type AppType } from "next/app";
 
 import { Toaster } from "@/components/ui/toaster";
@@ -9,10 +10,16 @@ import { ClerkProvider } from "@clerk/nextjs";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <ClerkProvider {...pageProps}>
-      <Component {...pageProps} />
-      <Toaster />
-    </ClerkProvider>
+    <>
+      <Head>
+        <title>App</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <ClerkProvider {...pageProps}>
+        <Component {...pageProps} />
+        <Toaster />
+      </ClerkProvider>
+    </>
   );
 };
 
