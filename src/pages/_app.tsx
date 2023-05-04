@@ -3,7 +3,7 @@ import { type AppType } from "next/app";
 
 import { Toaster } from "@/components/ui/toaster";
 
-import { api } from "@/utils/api";
+import { api } from "@/lib/api";
 
 import "@/styles/globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
