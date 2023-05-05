@@ -25,7 +25,7 @@ export const examplePostRouter = createTRPCRouter({
   update: privateProcedure
     .input(validationSchemaForUpdateExamplePost)
     .mutation(async ({ ctx, input }) => {
-      return new ExamplePostEntity().create(ctx.userId, input);
+      return new ExamplePostEntity().update(ctx.userId, input);
     }),
   delete: privateProcedure
     .input(z.string())

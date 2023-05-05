@@ -4,34 +4,36 @@ import { api } from "@/lib/api";
 import { LoadingPage } from "@/components/ui/loading";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
+import { useRouter } from "next/router";
 
 type Props = {
   id: string;
 };
 
 const ShowPost: NextPage<Props> = ({ id }: Props) => {
+  const router = useRouter();
+  const ctx = api.useContext();
   const query = api.examplePost.show.useQuery(id);
   const post = query.data;
-  const deleteMutation = api.examplePost.delete.useMutation();
+  const deleteMutation = api.examplePost.delete.useMutation({
+    onSuccess: async () => {
+      toast({
+        description: "Your post has been deleted.",
+      });
+
+      await ctx.examplePost.list.invalidate();
+      await router.push("/example-posts");
+    },
+  });
 
   if (query.isLoading || !post) return <LoadingPage />;
-
-  const onDelete = () => {
-    deleteMutation
-      .mutateAsync(id)
-      .then(() => {
-        window.location.href = "/example-posts";
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
 
   // todo: this should be a public route
   return (
     <Layout>
       <div className="flex flex-col gap-2 py-2">
-        <Button onClick={onDelete}>Delete Post</Button>
+        <Button onClick={() => deleteMutation.mutate(id)}>Delete Post</Button>
         <article className="overflow-hidden bg-white p-4 shadow sm:rounded-lg">
           <Image
             src={post.author.profileImageUrl}

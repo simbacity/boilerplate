@@ -6,13 +6,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/lib/api";
 import { useZodForm } from "@/hooks/use-zod-form";
 import { toast } from "@/components/ui/use-toast";
-import {
-  type ValidationSchemaForUpdateExamplePost,
-  validationSchemaForUpdateExamplePost,
-} from "@/validation-schemas/example-post.schema";
+import { validationSchemaForUpdateExamplePost } from "@/validation-schemas/example-post.schema";
 import { LoadingPage } from "@/components/ui/loading";
+import { useRouter } from "next/router";
 
 const EditExamplePostForm = ({ id }: { id: string }) => {
+  const router = useRouter();
   const ctx = api.useContext();
   const query = api.examplePost.show.useQuery(id);
   const post = query.data;
@@ -23,6 +22,7 @@ const EditExamplePostForm = ({ id }: { id: string }) => {
       });
 
       await ctx.examplePost.invalidate();
+      await router.push("/example-posts");
     },
   });
 
@@ -30,16 +30,13 @@ const EditExamplePostForm = ({ id }: { id: string }) => {
     schema: validationSchemaForUpdateExamplePost,
   });
 
-  const onSubmit = (data: ValidationSchemaForUpdateExamplePost) => {
-    mutation.mutate(data);
-    form.reset();
-  };
-
   if (query.isLoading || !post) return <LoadingPage />;
 
   return (
     <form
-      onSubmit={handlePromise(form.handleSubmit(onSubmit))}
+      onSubmit={handlePromise(
+        form.handleSubmit((data) => mutation.mutate(data))
+      )}
       className="max-w-2xl space-y-4"
     >
       <input type="hidden" value={id} {...form.register("id")} />

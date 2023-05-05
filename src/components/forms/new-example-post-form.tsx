@@ -6,19 +6,20 @@ import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/lib/api";
 import { useZodForm } from "@/hooks/use-zod-form";
 import { toast } from "@/components/ui/use-toast";
-import {
-  type ValidationSchemaForCreateExamplePost,
-  validationSchemaForCreateExamplePost,
-} from "@/validation-schemas/example-post.schema";
+import { validationSchemaForCreateExamplePost } from "@/validation-schemas/example-post.schema";
+import { useRouter } from "next/router";
 
 const NewExamplePostForm = () => {
+  const router = useRouter();
   const ctx = api.useContext();
   const mutation = api.examplePost.create.useMutation({
     onSuccess: async () => {
       toast({
         description: "Your post has been saved.",
       });
+
       await ctx.examplePost.invalidate();
+      await router.push("/example-posts");
     },
   });
 
@@ -26,14 +27,11 @@ const NewExamplePostForm = () => {
     schema: validationSchemaForCreateExamplePost,
   });
 
-  const onSubmit = (data: ValidationSchemaForCreateExamplePost) => {
-    mutation.mutate(data);
-    form.reset();
-  };
-
   return (
     <form
-      onSubmit={handlePromise(form.handleSubmit(onSubmit))}
+      onSubmit={handlePromise(
+        form.handleSubmit((data) => mutation.mutate(data))
+      )}
       className="max-w-2xl space-y-4"
     >
       <div className="space-y-1">

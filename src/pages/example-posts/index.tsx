@@ -15,7 +15,7 @@ const ListPosts: NextPage = () => {
   return (
     <Layout>
       <div className="flex flex-col gap-2 py-2">
-        <Link href="example-posts/create">
+        <Link href="example-posts/new">
           <Button>Create post</Button>
         </Link>
         {posts &&
