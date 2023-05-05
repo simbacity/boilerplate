@@ -9,6 +9,7 @@ import { toast } from "@/components/ui/use-toast";
 import { validationSchemaForUpdateExamplePost } from "@/validation-schemas/example-post.schema";
 import { LoadingPage } from "@/components/ui/loading";
 import { useRouter } from "next/router";
+import { Loader2 } from "lucide-react";
 
 const EditExamplePostForm = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -68,7 +69,10 @@ const EditExamplePostForm = ({ id }: { id: string }) => {
 
       <div>
         <Button type="submit" disabled={mutation.isLoading}>
-          {mutation.isLoading ? "Submitting" : "Submit"}
+          {mutation.isLoading && (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          )}
+          Submit
         </Button>
       </div>
     </form>

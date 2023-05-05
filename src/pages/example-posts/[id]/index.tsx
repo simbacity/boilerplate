@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/router";
+import { Loader2 } from "lucide-react";
 
 type Props = {
   id: string;
@@ -37,6 +38,9 @@ const ShowPost: NextPage<Props> = ({ id }: Props) => {
             onClick={() => deleteMutation.mutate(id)}
             variant="destructive"
           >
+            {deleteMutation.isLoading && (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            )}
             Delete Post
           </Button>
         </div>

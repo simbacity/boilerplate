@@ -4,8 +4,7 @@ import { NewExamplePostForm } from "@/components/forms/new-example-post-form";
 
 const NewPost: NextPage = () => {
   return (
-    <Layout>
-      <div className="pt-8" />
+    <Layout noPadding={true}>
       <div className="space-y-2 pb-5">
         <h1 className="scroll-m-20 text-4xl font-bold tracking-tight">
           Create a new post

@@ -8,6 +8,7 @@ import { useZodForm } from "@/hooks/use-zod-form";
 import { toast } from "@/components/ui/use-toast";
 import { validationSchemaForCreateExamplePost } from "@/validation-schemas/example-post.schema";
 import { useRouter } from "next/router";
+import { Loader2 } from "lucide-react";
 
 const NewExamplePostForm = () => {
   const router = useRouter();
@@ -62,7 +63,10 @@ const NewExamplePostForm = () => {
 
       <div>
         <Button type="submit" disabled={mutation.isLoading}>
-          {mutation.isLoading ? "Submitting" : "Submit"}
+          {mutation.isLoading && (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          )}
+          Submit
         </Button>
       </div>
     </form>

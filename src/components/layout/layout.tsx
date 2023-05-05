@@ -3,16 +3,20 @@ import { NavigationApp } from "@/components/layout/navigation-app";
 
 const Layout = ({
   children,
-  fullWidth,
+  noPadding,
+  fullScreen,
 }: {
   children: React.ReactNode;
-  fullWidth?: boolean;
+  noPadding?: boolean;
+  fullScreen?: boolean;
 }) => {
   return (
     <AuthGuard>
-      <div className="relative min-h-screen">
-        <NavigationApp />
-        <main className={`${fullWidth ? "" : "container"}`}>{children}</main>
+      <div className="flex min-h-screen">
+        {!fullScreen && <NavigationApp />}
+        <main className={`${noPadding ? "" : "px-12 py-5"} relative w-full`}>
+          {children}
+        </main>
       </div>
     </AuthGuard>
   );
