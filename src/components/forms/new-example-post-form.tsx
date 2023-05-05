@@ -11,23 +11,19 @@ import {
   validationSchemaForCreateExamplePost,
 } from "@/validation-schemas/example-post.schema";
 
-const CreateExamplePostForm = () => {
+const NewExamplePostForm = () => {
   const ctx = api.useContext();
   const mutation = api.examplePost.create.useMutation({
     onSuccess: async () => {
       toast({
         description: "Your post has been saved.",
       });
-      await ctx.examplePost.list.invalidate();
+      await ctx.examplePost.invalidate();
     },
   });
 
   const form = useZodForm({
     schema: validationSchemaForCreateExamplePost,
-    defaultValues: {
-      title: "",
-      content: "",
-    },
   });
 
   const onSubmit = (data: ValidationSchemaForCreateExamplePost) => {
@@ -42,7 +38,11 @@ const CreateExamplePostForm = () => {
     >
       <div className="space-y-1">
         <Label htmlFor="title">Title</Label>
-        <Input id="title" defaultValue="test" {...form.register("title")} />
+        <Input
+          id="title"
+          defaultValue="Your title"
+          {...form.register("title")}
+        />
         {form.formState.errors.title?.message && (
           <p className="text-red-600">{form.formState.errors.title?.message}</p>
         )}
@@ -50,7 +50,11 @@ const CreateExamplePostForm = () => {
 
       <div className="space-y-1">
         <Label htmlFor="content">Content</Label>
-        <Textarea id="content" {...form.register("content")} />
+        <Textarea
+          id="content"
+          defaultValue="Your content"
+          {...form.register("content")}
+        />
         {form.formState.errors.content?.message && (
           <p className="text-red-600">
             {form.formState.errors.content?.message}
@@ -67,4 +71,4 @@ const CreateExamplePostForm = () => {
   );
 };
 
-export { CreateExamplePostForm };
+export { NewExamplePostForm };

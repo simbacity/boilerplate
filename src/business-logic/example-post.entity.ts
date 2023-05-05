@@ -1,6 +1,9 @@
 import ClerkUserEntity from "@/business-logic/clerk-user.entity";
 import { prisma } from "@/server/db";
-import { type ValidationSchemaForCreateExamplePost } from "@/validation-schemas/example-post.schema";
+import {
+  type ValidationSchemaForUpdateExamplePost,
+  type ValidationSchemaForCreateExamplePost,
+} from "@/validation-schemas/example-post.schema";
 import { type ExamplePost } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { type AsyncReturnType } from "type-fest";
@@ -16,6 +19,68 @@ export default class ExamplePostEntity {
     });
 
     return post;
+  }
+
+  async update(userId: string, input: ValidationSchemaForUpdateExamplePost) {
+    const post = await prisma.examplePost.findUnique({
+      where: {
+        id: input.id,
+      },
+    });
+
+    this.validateAccess(post, userId);
+
+    const updatedPost = await prisma.examplePost.update({
+      where: {
+        id: input.id,
+      },
+      data: {
+        title: input.title,
+        content: input.content,
+      },
+    });
+
+    return updatedPost;
+  }
+
+  async delete(userId: string, postId: string) {
+    const post = await prisma.examplePost.findUnique({
+      where: {
+        id: postId,
+      },
+    });
+
+    this.validateAccess(post, userId);
+
+    await prisma.examplePost.delete({
+      where: {
+        id: postId,
+      },
+    });
+
+    return true;
+  }
+
+  async find(postId: string) {
+    const post = await prisma.examplePost.findUnique({
+      where: {
+        id: postId,
+      },
+    });
+
+    if (!post) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Post not found",
+      });
+    }
+
+    const author = await new ClerkUserEntity().findUserForClient(post.authorId);
+
+    return {
+      post,
+      author,
+    };
   }
 
   async list() {
@@ -48,5 +113,21 @@ export default class ExamplePostEntity {
       post,
       author,
     };
+  }
+
+  private validateAccess(post: ExamplePost | null, userId: string) {
+    if (!post) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Post not found",
+      });
+    }
+
+    if (post.authorId !== userId) {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "You are not the author of this post",
+      });
+    }
   }
 }

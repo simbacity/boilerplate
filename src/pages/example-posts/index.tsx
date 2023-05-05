@@ -19,21 +19,27 @@ const ListPosts: NextPage = () => {
           <Button>Create post</Button>
         </Link>
         {posts &&
-          posts.map((post) => (
+          posts.map((data) => (
             <article
-              key={post.post.id}
+              key={data.post.id}
               className="overflow-hidden bg-white p-4 shadow sm:rounded-lg"
             >
+              <Link href={`example-posts/${data.post.id}`}>
+                <Button>View post</Button>
+              </Link>
+              <Link href={`example-posts/${data.post.id}/edit`}>
+                <Button>Edit post</Button>
+              </Link>
               <Image
-                src={post.author.profileImageUrl}
+                src={data.author.profileImageUrl}
                 alt="Author"
                 width={30}
                 height={30}
                 className="rounded-full"
               />
-              <div>{post.author.firstName}</div>
-              <h3 className="text-xl font-bold">{post.post.title}</h3>
-              <p className="my-2">{post.post.content}</p>
+              <div>{data.author.firstName}</div>
+              <h3 className="text-xl font-bold">{data.post.title}</h3>
+              <p className="my-2">{data.post.content}</p>
             </article>
           ))}
       </div>

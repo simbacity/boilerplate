@@ -7,13 +7,13 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const { isSignedIn, isLoaded } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    if (isLoaded && !isSignedIn) {
-      void router.replace("/");
-    }
-  }, [isSignedIn, isLoaded, router]);
+  // useEffect(() => {
+  //   if (isLoaded && !isSignedIn) {
+  //     void router.replace("/");
+  //   }
+  // }, [isSignedIn, isLoaded, router]);
 
-  if (!isLoaded || !isSignedIn) return <LoadingPage />;
+  // if (!isLoaded || !isSignedIn) return <LoadingPage />;
   return <>{children}</>;
 };
 

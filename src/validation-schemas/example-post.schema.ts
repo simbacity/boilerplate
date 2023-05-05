@@ -8,3 +8,12 @@ export const validationSchemaForCreateExamplePost = z.object({
 export type ValidationSchemaForCreateExamplePost = z.TypeOf<
   typeof validationSchemaForCreateExamplePost
 >;
+
+export const validationSchemaForUpdateExamplePost =
+  validationSchemaForCreateExamplePost.extend({
+    id: z.string(),
+  });
+
+export type ValidationSchemaForUpdateExamplePost = z.TypeOf<
+  typeof validationSchemaForUpdateExamplePost
+>;
