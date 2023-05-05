@@ -1,8 +1,4 @@
-import {
-  createTRPCRouter,
-  privateProcedure,
-  publicProcedure,
-} from "@/server/api/trpc";
+import { createTRPCRouter, privateProcedure } from "@/server/api/trpc";
 import {
   validationSchemaForCreateExamplePost,
   validationSchemaForUpdateExamplePost,
@@ -11,10 +7,10 @@ import ExamplePostEntity from "@/business-logic/example-post.entity";
 import { z } from "zod";
 
 export const examplePostRouter = createTRPCRouter({
-  show: publicProcedure.input(z.string()).query(async ({ input }) => {
+  show: privateProcedure.input(z.string()).query(async ({ input }) => {
     return new ExamplePostEntity().find(input);
   }),
-  list: publicProcedure.query(async () => {
+  list: privateProcedure.query(async () => {
     return new ExamplePostEntity().list();
   }),
   create: privateProcedure

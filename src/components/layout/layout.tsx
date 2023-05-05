@@ -10,8 +10,10 @@ const Layout = ({
 }) => {
   return (
     <AuthGuard>
-      <NavigationApp />
-      <main className={`${fullWidth ? "" : "container"}`}>{children}</main>
+      <div className="relative min-h-screen">
+        <NavigationApp />
+        <main className={`${fullWidth ? "" : "container"}`}>{children}</main>
+      </div>
     </AuthGuard>
   );
 };

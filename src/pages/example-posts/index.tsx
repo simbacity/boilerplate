@@ -10,7 +10,12 @@ const ListPosts: NextPage = () => {
   const query = api.examplePost.list.useQuery();
   const posts = query.data;
 
-  if (query.isLoading || !posts) return <LoadingPage />;
+  if (!posts)
+    return (
+      <Layout>
+        <LoadingPage />
+      </Layout>
+    );
 
   return (
     <Layout>

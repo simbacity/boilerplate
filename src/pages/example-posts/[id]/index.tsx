@@ -27,11 +27,10 @@ const ShowPost: NextPage<Props> = ({ id }: Props) => {
     },
   });
 
-  if (query.isLoading || !post) return <LoadingPage />;
+  const Post = () => {
+    if (!post) return null;
 
-  // todo: this should be a public route
-  return (
-    <Layout>
+    return (
       <div className="flex flex-col gap-2 py-2">
         <Button onClick={() => deleteMutation.mutate(id)}>Delete Post</Button>
         <article className="overflow-hidden bg-white p-4 shadow sm:rounded-lg">
@@ -47,8 +46,10 @@ const ShowPost: NextPage<Props> = ({ id }: Props) => {
           <p className="my-2">{post.post.content}</p>
         </article>
       </div>
-    </Layout>
-  );
+    );
+  };
+
+  return <Layout>{post ? <Post /> : <LoadingPage />}</Layout>;
 };
 
 export function getServerSideProps(context: { params: Props }) {

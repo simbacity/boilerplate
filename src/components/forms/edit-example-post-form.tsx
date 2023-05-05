@@ -30,7 +30,7 @@ const EditExamplePostForm = ({ id }: { id: string }) => {
     schema: validationSchemaForUpdateExamplePost,
   });
 
-  if (query.isLoading || !post) return <LoadingPage />;
+  if (!post) return <LoadingPage />;
 
   return (
     <form
