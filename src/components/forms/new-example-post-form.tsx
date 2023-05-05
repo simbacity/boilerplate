@@ -15,7 +15,7 @@ const NewExamplePostForm = () => {
   const mutation = api.examplePost.create.useMutation({
     onSuccess: async () => {
       toast({
-        description: "Your post has been saved.",
+        description: "Your post has been created.",
       });
 
       await ctx.examplePost.invalidate();

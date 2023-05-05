@@ -32,7 +32,14 @@ const ShowPost: NextPage<Props> = ({ id }: Props) => {
 
     return (
       <div className="flex flex-col gap-2 py-2">
-        <Button onClick={() => deleteMutation.mutate(id)}>Delete Post</Button>
+        <div>
+          <Button
+            onClick={() => deleteMutation.mutate(id)}
+            variant="destructive"
+          >
+            Delete Post
+          </Button>
+        </div>
         <article className="overflow-hidden bg-white p-4 shadow sm:rounded-lg">
           <Image
             src={post.author.profileImageUrl}
