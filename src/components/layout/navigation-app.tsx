@@ -4,12 +4,29 @@ import Image from "next/image";
 import { UserButton } from "@clerk/nextjs";
 import { useRouter } from "next/router";
 
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { MenuIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
 const MENU_ITEMS = Object.freeze([
   { label: "Overview", path: "/dashboard" },
   { label: "Example Post", path: "/example-posts" },
 ]);
 
 const NavigationApp = () => {
+  return (
+    <>
+      <div className="hidden md:block">
+        <NavigationDesktop />
+      </div>
+      <div className="block p-2 text-right md:hidden">
+        <NavigationMobile />
+      </div>
+    </>
+  );
+};
+
+const NavigationDesktop = () => {
   return (
     <aside className="flex h-screen w-64 flex-col space-y-6 overflow-hidden overflow-y-scroll border-r border-r-accent bg-white px-3 pb-3 pt-6">
       <div>
@@ -27,6 +44,28 @@ const NavigationApp = () => {
         <UserButton />
       </div>
     </aside>
+  );
+};
+
+const NavigationMobile = () => {
+  return (
+    <Dialog>
+      <DialogTrigger>
+        <Button variant="ghost">
+          <MenuIcon className="h-6 w-6" />
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <div className="flex h-screen flex-col py-12">
+          <div className="flex-grow">
+            <NavigationMenu />
+          </div>
+          <div>
+            <UserButton />
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 

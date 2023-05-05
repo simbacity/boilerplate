@@ -12,9 +12,13 @@ const Layout = ({
 }) => {
   return (
     <AuthGuard>
-      <div className="flex min-h-screen">
+      <div className="flex min-h-screen flex-col md:flex-row">
         {!fullScreen && <NavigationApp />}
-        <main className={`${noPadding ? "" : "px-12 py-5"} relative w-full`}>
+        <main
+          className={`${
+            noPadding ? "" : "px-3 md:px-12 md:py-5"
+          } relative w-full`}
+        >
           {children}
         </main>
       </div>
