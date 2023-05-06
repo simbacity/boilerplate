@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { MenuIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 const MENU_ITEMS = Object.freeze([
   { label: "Overview", path: "/dashboard" },
@@ -51,9 +50,9 @@ const NavigationMobile = () => {
   return (
     <Dialog>
       <DialogTrigger>
-        <Button variant="ghost">
+        <div className="rounded p-2 hover:bg-accent hover:text-accent-foreground">
           <MenuIcon className="h-6 w-6" />
-        </Button>
+        </div>
       </DialogTrigger>
       <DialogContent>
         <div className="flex h-screen flex-col py-12">

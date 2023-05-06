@@ -9,20 +9,39 @@ import { toast } from "@/components/ui/use-toast";
 import { validationSchemaForUpdateExamplePost } from "@/validation-schemas/example-post.schema";
 import { LoadingPage } from "@/components/ui/loading";
 import { useRouter } from "next/router";
-import { Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2, MoreHorizontal, Trash2 } from "lucide-react";
+import { ActionsTopbar } from "@/components/layout/actions-topbar";
+import Link from "next/link";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const EditExamplePostForm = ({ id }: { id: string }) => {
   const router = useRouter();
   const ctx = api.useContext();
   const query = api.examplePost.show.useQuery(id);
   const post = query.data;
-  const mutation = api.examplePost.update.useMutation({
+  const updateMutation = api.examplePost.update.useMutation({
     onSuccess: async () => {
       toast({
         description: "Your post has been updated.",
       });
 
       await ctx.examplePost.invalidate();
+      await router.push("/example-posts");
+    },
+  });
+  const deleteMutation = api.examplePost.delete.useMutation({
+    onSuccess: async () => {
+      toast({
+        description: "Your post has been deleted.",
+      });
+
+      await ctx.examplePost.list.invalidate();
       await router.push("/example-posts");
     },
   });
@@ -36,44 +55,70 @@ const EditExamplePostForm = ({ id }: { id: string }) => {
   return (
     <form
       onSubmit={handlePromise(
-        form.handleSubmit((data) => mutation.mutate(data))
+        form.handleSubmit((data) => updateMutation.mutate(data))
       )}
-      className="max-w-2xl space-y-4"
     >
+      <ActionsTopbar>
+        <Link href="/example-posts">
+          <Button variant="ghost">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back
+          </Button>
+        </Link>
+        <div className="flex items-center justify-center gap-2">
+          <Button type="submit" disabled={updateMutation.isLoading}>
+            {updateMutation.isLoading && (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            Save
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="ghost">
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem
+                className="text-red-400"
+                onClick={() => deleteMutation.mutate(id)}
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </ActionsTopbar>
       <input type="hidden" value={id} {...form.register("id")} />
-      <div className="space-y-1">
-        <Label htmlFor="title">Title</Label>
-        <Input
-          id="title"
-          defaultValue={post.post.title}
-          {...form.register("title")}
-        />
-        {form.formState.errors.title?.message && (
-          <p className="text-red-600">{form.formState.errors.title?.message}</p>
-        )}
-      </div>
-
-      <div className="space-y-1">
-        <Label htmlFor="content">Content</Label>
-        <Textarea
-          id="content"
-          defaultValue={post.post.content}
-          {...form.register("content")}
-        />
-        {form.formState.errors.content?.message && (
-          <p className="text-red-600">
-            {form.formState.errors.content?.message}
-          </p>
-        )}
-      </div>
-
-      <div>
-        <Button type="submit" disabled={mutation.isLoading}>
-          {mutation.isLoading && (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+      <div className="max-w-2xl space-y-4 px-8 py-6">
+        <div className="space-y-1">
+          <Label htmlFor="title">Title</Label>
+          <Input
+            id="title"
+            defaultValue={post.post.title}
+            {...form.register("title")}
+          />
+          {form.formState.errors.title?.message && (
+            <p className="text-red-600">
+              {form.formState.errors.title?.message}
+            </p>
           )}
-          Submit
-        </Button>
+        </div>
+
+        <div className="space-y-1">
+          <Label htmlFor="content">Content</Label>
+          <Textarea
+            id="content"
+            defaultValue={post.post.content}
+            {...form.register("content")}
+          />
+          {form.formState.errors.content?.message && (
+            <p className="text-red-600">
+              {form.formState.errors.content?.message}
+            </p>
+          )}
+        </div>
       </div>
     </form>
   );
