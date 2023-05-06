@@ -47,9 +47,10 @@ const ListPosts: NextPage = () => {
               <div
                 key={data.post.id}
                 className="cursor-pointer rounded-lg border border-muted hover:bg-slate-50"
-                onClick={() =>
-                  void router.push(`/example-posts/${data.post.id}`)
-                }
+                onClick={(e) => {
+                  e.stopPropagation();
+                  void router.push(`/example-posts/${data.post.id}`);
+                }}
               >
                 <div
                   className="flex items-start justify-between
@@ -65,11 +66,13 @@ const ListPosts: NextPage = () => {
                       </p>
                     </div>
                   </div>
-                  <ActionsDropdown postId={data.post.id}>
-                    <Button variant="ghost" className="m-2">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </ActionsDropdown>
+                  <div className="m-2">
+                    <ActionsDropdown postId={data.post.id}>
+                      <Button variant="ghost">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </ActionsDropdown>
+                  </div>
                 </div>
                 <div className="flex items-center gap-1 p-4 pt-2">
                   <Image

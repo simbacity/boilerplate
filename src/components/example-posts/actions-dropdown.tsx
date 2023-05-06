@@ -34,14 +34,20 @@ const ActionsDropdown = ({
       <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem
-          onClick={() => void router.push(`/example-posts/${postId}/edit`)}
+          onClick={(e) => {
+            e.stopPropagation();
+            void router.push(`/example-posts/${postId}/edit`);
+          }}
         >
           <Edit className="mr-2 h-4 w-4" />
           Edit
         </DropdownMenuItem>
         <DropdownMenuItem
           className="text-red-400"
-          onClick={() => deleteMutation.mutate(postId)}
+          onClick={(e) => {
+            e.stopPropagation();
+            deleteMutation.mutate(postId);
+          }}
         >
           <Trash2 className="mr-2 h-4 w-4" />
           Delete
