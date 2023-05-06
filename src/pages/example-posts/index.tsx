@@ -66,7 +66,7 @@ const ListPosts: NextPage = () => {
                     </div>
                   </div>
                   <ActionsDropdown postId={data.post.id}>
-                    <Button variant="ghost">
+                    <Button variant="ghost" className="m-2">
                       <MoreHorizontal className="h-4 w-4" />
                     </Button>
                   </ActionsDropdown>

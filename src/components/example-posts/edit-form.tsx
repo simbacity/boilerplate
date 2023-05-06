@@ -9,7 +9,7 @@ import { toast } from "@/components/ui/use-toast";
 import { validationSchemaForUpdateExamplePost } from "@/validation-schemas/example-post.schema";
 import { LoadingPage } from "@/components/ui/loading";
 import { useRouter } from "next/router";
-import { ArrowLeft, Loader2, MoreHorizontal, Trash2 } from "lucide-react";
+import { ArrowLeft, Loader2, MoreHorizontal } from "lucide-react";
 import { ActionsTopbar } from "@/components/layout/actions-topbar";
 import Link from "next/link";
 
