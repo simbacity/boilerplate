@@ -77,7 +77,7 @@ const ListPosts: NextPage = () => {
                       {data.post.title}
                     </h4>
                     <div>
-                      <p className="leading-7 [&:not(:first-child)]:mt-6">
+                      <p className="text-sm leading-7 [&:not(:first-child)]:mt-6">
                         {data.post.content}
                       </p>
                     </div>
