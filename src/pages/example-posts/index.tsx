@@ -25,7 +25,7 @@ const ListPosts: NextPage = () => {
   return (
     <Layout>
       <div className="flex flex-col gap-2 py-2">
-        <div className="flex w-full justify-between">
+        <div className="flex w-full items-start justify-between">
           <div className="pb-3">
             <h1 className="scroll-m-20 text-2xl font-bold tracking-tight">
               Example Posts

@@ -36,7 +36,7 @@ const ShowPost: NextPage<Props> = ({ id }: Props) => {
             </Button>
           </ActionsDropdown>
         </ActionsTopbar>
-        <div className="max-w-2xl px-8 py-6">
+        <div className="max-w-2xl p-3 md:px-8 md:py-6">
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
             {post.post.title}
           </h2>
@@ -63,7 +63,11 @@ const ShowPost: NextPage<Props> = ({ id }: Props) => {
     );
   };
 
-  return <Layout noPadding>{post ? <Post /> : <LoadingPage />}</Layout>;
+  return (
+    <Layout noPadding fullScreenOnMobile>
+      {post ? <Post /> : <LoadingPage />}
+    </Layout>
+  );
 };
 
 export function getServerSideProps(context: { params: Props }) {

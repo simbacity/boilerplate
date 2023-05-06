@@ -51,7 +51,7 @@ const NewExamplePostForm = () => {
         </Button>
       </ActionsTopbar>
 
-      <div className="px-8 py-6">
+      <div className="p-3 md:px-8 md:py-6">
         <div className="max-w-2xl space-y-4">
           <div className="space-y-1">
             <Label htmlFor="title">Title</Label>

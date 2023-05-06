@@ -18,9 +18,8 @@ const NavigationApp = () => {
       <div className="hidden md:block">
         <NavigationDesktop />
       </div>
-      <div className="block p-2 text-right md:hidden">
-        <NavigationMobile />
-      </div>
+
+      <NavigationMobile />
     </>
   );
 };
@@ -48,23 +47,25 @@ const NavigationDesktop = () => {
 
 const NavigationMobile = () => {
   return (
-    <Dialog>
-      <DialogTrigger>
-        <div className="rounded p-2 hover:bg-accent hover:text-accent-foreground">
-          <MenuIcon className="h-6 w-6" />
-        </div>
-      </DialogTrigger>
-      <DialogContent>
-        <div className="flex h-screen flex-col py-12">
-          <div className="flex-grow">
-            <NavigationMenu />
+    <div className="flex items-center justify-between border-b border-b-accent p-2 text-right">
+      <Dialog>
+        <DialogTrigger>
+          <div className="rounded p-2 hover:bg-accent hover:text-accent-foreground">
+            <MenuIcon className="h-6 w-6" />
           </div>
-          <div>
-            <UserButton />
+        </DialogTrigger>
+        <DialogContent>
+          <div className="flex h-screen flex-col py-12">
+            <div className="flex-grow">
+              <NavigationMenu />
+            </div>
           </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </DialogContent>
+      </Dialog>
+      <div>
+        <UserButton />
+      </div>
+    </div>
   );
 };
 

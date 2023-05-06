@@ -8,7 +8,7 @@ type Props = {
 
 const EditPost: NextPage<Props> = ({ id }: Props) => {
   return (
-    <Layout noPadding>
+    <Layout noPadding fullScreenOnMobile>
       <EditExamplePostForm id={id} />
     </Layout>
   );

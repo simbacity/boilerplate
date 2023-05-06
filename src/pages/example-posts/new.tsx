@@ -4,7 +4,7 @@ import { NewExamplePostForm } from "@/components/example-posts/new-form";
 
 const NewPost: NextPage = () => {
   return (
-    <Layout noPadding>
+    <Layout noPadding fullScreenOnMobile>
       <NewExamplePostForm />
     </Layout>
   );
