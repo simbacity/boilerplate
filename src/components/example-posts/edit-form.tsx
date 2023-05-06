@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { handlePromise } from "@/lib/promise";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import { ArrowLeft, Loader2, MoreHorizontal } from "lucide-react";
 import { ActionsTopbar } from "@/components/layout/actions-topbar";
 import Link from "next/link";
-
+import { cn } from "@/lib/utils";
 import { ActionsDropdown } from "@/components/example-posts/actions-dropdown";
 
 const EditExamplePostForm = ({ id }: { id: string }) => {
@@ -58,9 +58,9 @@ const EditExamplePostForm = ({ id }: { id: string }) => {
             Save
           </Button>
           <ActionsDropdown postId={id}>
-            <Button variant="ghost">
+            <div className={cn(buttonVariants({ variant: "ghost" }))}>
               <MoreHorizontal className="h-4 w-4" />
-            </Button>
+            </div>
           </ActionsDropdown>
         </div>
       </ActionsTopbar>

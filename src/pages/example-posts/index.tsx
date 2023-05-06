@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout/layout";
 import { type NextPage } from "next";
 import { api } from "@/lib/api";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { LoadingPage } from "@/components/ui/loading";
 import Image from "next/image";
@@ -9,6 +9,7 @@ import { MoreHorizontal, Plus } from "lucide-react";
 import { useRouter } from "next/router";
 
 import { ActionsDropdown } from "@/components/example-posts/actions-dropdown";
+import { cn } from "@/lib/utils";
 
 const ListPosts: NextPage = () => {
   const router = useRouter();
@@ -68,9 +69,9 @@ const ListPosts: NextPage = () => {
                   </div>
                   <div className="m-2">
                     <ActionsDropdown postId={data.post.id}>
-                      <Button variant="ghost">
+                      <div className={cn(buttonVariants({ variant: "ghost" }))}>
                         <MoreHorizontal className="h-4 w-4" />
-                      </Button>
+                      </div>
                     </ActionsDropdown>
                   </div>
                 </div>

@@ -3,12 +3,13 @@ import { type NextPage } from "next";
 import { api } from "@/lib/api";
 import { LoadingPage } from "@/components/ui/loading";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { ArrowLeft, MoreHorizontal } from "lucide-react";
 import { ActionsTopbar } from "@/components/layout/actions-topbar";
 import Link from "next/link";
 
 import { ActionsDropdown } from "@/components/example-posts/actions-dropdown";
+import { cn } from "@/lib/utils";
 
 type Props = {
   id: string;
@@ -31,9 +32,9 @@ const ShowPost: NextPage<Props> = ({ id }: Props) => {
             </Button>
           </Link>
           <ActionsDropdown postId={id}>
-            <Button variant="ghost">
+            <div className={cn(buttonVariants({ variant: "ghost" }))}>
               <MoreHorizontal className="h-4 w-4" />
-            </Button>
+            </div>
           </ActionsDropdown>
         </ActionsTopbar>
         <div className="max-w-2xl p-3 md:px-8 md:py-6">
