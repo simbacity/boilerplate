@@ -4,38 +4,19 @@ import { api } from "@/lib/api";
 import { LoadingPage } from "@/components/ui/loading";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/use-toast";
-import { useRouter } from "next/router";
-import { ArrowLeft, Edit, MoreHorizontal, Trash2 } from "lucide-react";
+import { ArrowLeft, MoreHorizontal } from "lucide-react";
 import { ActionsTopbar } from "@/components/layout/actions-topbar";
 import Link from "next/link";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { ActionsDropdown } from "@/components/example-posts/actions-dropdown";
 
 type Props = {
   id: string;
 };
 
 const ShowPost: NextPage<Props> = ({ id }: Props) => {
-  const router = useRouter();
-  const ctx = api.useContext();
   const query = api.examplePost.show.useQuery(id);
   const post = query.data;
-  const deleteMutation = api.examplePost.delete.useMutation({
-    onSuccess: async () => {
-      toast({
-        description: "Your post has been deleted.",
-      });
-
-      await ctx.examplePost.list.invalidate();
-      await router.push("/example-posts");
-    },
-  });
 
   const Post = () => {
     if (!post) return null;
@@ -49,28 +30,11 @@ const ShowPost: NextPage<Props> = ({ id }: Props) => {
               Back
             </Button>
           </Link>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button variant="ghost">
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem
-                onClick={() => void router.push(`/example-posts/${id}/edit`)}
-              >
-                <Edit className="mr-2 h-4 w-4" />
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="text-red-400"
-                onClick={() => deleteMutation.mutate(id)}
-              >
-                <Trash2 className="mr-2 h-4 w-4" />
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <ActionsDropdown postId={id}>
+            <Button variant="ghost">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </ActionsDropdown>
         </ActionsTopbar>
         <div className="max-w-2xl px-8 py-6">
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">

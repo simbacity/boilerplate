@@ -13,12 +13,7 @@ import { ArrowLeft, Loader2, MoreHorizontal, Trash2 } from "lucide-react";
 import { ActionsTopbar } from "@/components/layout/actions-topbar";
 import Link from "next/link";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { ActionsDropdown } from "@/components/example-posts/actions-dropdown";
 
 const EditExamplePostForm = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -32,16 +27,6 @@ const EditExamplePostForm = ({ id }: { id: string }) => {
       });
 
       await ctx.examplePost.invalidate();
-      await router.push("/example-posts");
-    },
-  });
-  const deleteMutation = api.examplePost.delete.useMutation({
-    onSuccess: async () => {
-      toast({
-        description: "Your post has been deleted.",
-      });
-
-      await ctx.examplePost.list.invalidate();
       await router.push("/example-posts");
     },
   });
@@ -72,22 +57,11 @@ const EditExamplePostForm = ({ id }: { id: string }) => {
             )}
             Save
           </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button variant="ghost">
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem
-                className="text-red-400"
-                onClick={() => deleteMutation.mutate(id)}
-              >
-                <Trash2 className="mr-2 h-4 w-4" />
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <ActionsDropdown postId={id}>
+            <Button variant="ghost">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </ActionsDropdown>
         </div>
       </ActionsTopbar>
       <input type="hidden" value={id} {...form.register("id")} />

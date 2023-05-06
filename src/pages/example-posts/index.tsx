@@ -5,32 +5,15 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { LoadingPage } from "@/components/ui/loading";
 import Image from "next/image";
-import { Edit, MoreHorizontal, Plus, Trash2 } from "lucide-react";
+import { MoreHorizontal, Plus } from "lucide-react";
 import { useRouter } from "next/router";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { toast } from "@/components/ui/use-toast";
+import { ActionsDropdown } from "@/components/example-posts/actions-dropdown";
 
 const ListPosts: NextPage = () => {
   const router = useRouter();
-  const ctx = api.useContext();
   const query = api.examplePost.list.useQuery();
   const posts = query.data;
-  const deleteMutation = api.examplePost.delete.useMutation({
-    onSuccess: async () => {
-      toast({
-        description: "Your post has been deleted.",
-      });
-
-      await ctx.examplePost.list.invalidate();
-      await router.push("/example-posts");
-    },
-  });
 
   if (!posts)
     return (
@@ -82,32 +65,11 @@ const ListPosts: NextPage = () => {
                       </p>
                     </div>
                   </div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger>
-                      <Button variant="ghost" size="sm" className="m-1">
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem
-                        onClick={() =>
-                          void router.push(
-                            `/example-posts/${data.post.id}/edit`
-                          )
-                        }
-                      >
-                        <Edit className="mr-2 h-4 w-4" />
-                        Edit
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        className="text-red-400"
-                        onClick={() => deleteMutation.mutate(data.post.id)}
-                      >
-                        <Trash2 className="mr-2 h-4 w-4" />
-                        Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <ActionsDropdown postId={data.post.id}>
+                    <Button variant="ghost">
+                      <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                  </ActionsDropdown>
                 </div>
                 <div className="flex items-center gap-1 p-4 pt-2">
                   <Image
