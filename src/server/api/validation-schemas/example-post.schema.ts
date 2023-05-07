@@ -17,3 +17,12 @@ export const validationSchemaForUpdateExamplePost =
 export type ValidationSchemaForUpdateExamplePost = z.TypeOf<
   typeof validationSchemaForUpdateExamplePost
 >;
+
+export const validationSchemaForListExamplePosts = z.object({
+  limit: z.number().min(1).max(20).nullish(),
+  cursor: z.string().nullish(),
+});
+
+export type ValidationSchemaForListExamplePosts = z.TypeOf<
+  typeof validationSchemaForListExamplePosts
+>;

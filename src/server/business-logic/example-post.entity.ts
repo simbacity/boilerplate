@@ -3,6 +3,7 @@ import { prisma } from "@/server/db";
 import {
   type ValidationSchemaForUpdateExamplePost,
   type ValidationSchemaForCreateExamplePost,
+  type ValidationSchemaForListExamplePosts,
 } from "@/server/api/validation-schemas/example-post.schema";
 import { type ExamplePost } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
@@ -83,17 +84,35 @@ export default class ExamplePostEntity {
     };
   }
 
-  async list() {
+  async list(params: ValidationSchemaForListExamplePosts) {
+    const limit = params.limit ?? 10;
+    const cursor = params.cursor;
+
     const posts = await prisma.examplePost.findMany({
-      take: 100,
+      take: limit + 1,
+      cursor: cursor ? { id: cursor } : undefined,
+      orderBy: {
+        id: "asc",
+      },
     });
+
+    let nextCursor: typeof cursor;
+    if (posts.length > limit) {
+      const nextItem = posts.pop();
+      nextCursor = nextItem?.id;
+    }
 
     const userIdsFromPosts = posts.map((post) => post.authorId);
     const users = await new ClerkUserEntity().listUsersForClient(
       userIdsFromPosts
     );
 
-    return posts.map((post) => this.mapAuthorToPost(post, users));
+    const items = posts.map((post) => this.mapAuthorToPost(post, users));
+
+    return {
+      items,
+      nextCursor,
+    };
   }
 
   private mapAuthorToPost(
