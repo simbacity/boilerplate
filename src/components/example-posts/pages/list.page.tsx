@@ -1,13 +1,12 @@
 import { Layout } from "@/components/layout/layout";
 import { type RouterOutputs, api } from "@/lib/api";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { LoadingPage } from "@/components/ui/loading";
 import Image from "next/image";
 import { MoreHorizontal, Plus } from "lucide-react";
 
 import { ActionsDropdown } from "@/components/example-posts/components/actions-dropdown";
-import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/clerk-react";
 import { type UserResource } from "@clerk/types";
 import { useRouter } from "next/router";
@@ -86,9 +85,11 @@ const PostItem = ({
         <div className="m-2">
           {canEdit && (
             <ActionsDropdown postId={post.post.id}>
-              <div className={cn(buttonVariants({ variant: "ghost" }))}>
-                <MoreHorizontal className="h-4 w-4" />
-              </div>
+              <Button variant="ghost" asChild>
+                <div>
+                  <MoreHorizontal className="h-4 w-4" />
+                </div>
+              </Button>
             </ActionsDropdown>
           )}
         </div>

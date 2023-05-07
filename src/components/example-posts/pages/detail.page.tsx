@@ -2,13 +2,12 @@ import { Layout } from "@/components/layout/layout";
 import { api } from "@/lib/api";
 import { LoadingPage } from "@/components/ui/loading";
 import Image from "next/image";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { ArrowLeft, MoreHorizontal } from "lucide-react";
 import { ActionsTopbar } from "@/components/layout/actions-topbar";
 import Link from "next/link";
 
 import { ActionsDropdown } from "@/components/example-posts/components/actions-dropdown";
-import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/clerk-react";
 
 const ExamplePostDetailPage = ({ id }: { id: string }) => {
@@ -37,9 +36,11 @@ const ExamplePostDetailPage = ({ id }: { id: string }) => {
           </Link>
           {canEdit && (
             <ActionsDropdown postId={id}>
-              <div className={cn(buttonVariants({ variant: "ghost" }))}>
-                <MoreHorizontal className="h-4 w-4" />
-              </div>
+              <Button variant="ghost" asChild>
+                <div>
+                  <MoreHorizontal className="h-4 w-4" />
+                </div>
+              </Button>
             </ActionsDropdown>
           )}
         </ActionsTopbar>

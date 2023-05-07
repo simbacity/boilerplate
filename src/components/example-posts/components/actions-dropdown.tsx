@@ -24,9 +24,11 @@ import {
 const ActionsDropdown = ({
   children,
   postId,
+  withoutEdit,
 }: {
   children: React.ReactNode;
   postId: string;
+  withoutEdit?: boolean;
 }) => {
   const ctx = api.useContext();
   const router = useRouter();
@@ -95,15 +97,17 @@ const ActionsDropdown = ({
       <DropdownMenu>
         <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem
-            onClick={(e) => {
-              e.stopPropagation();
-              void router.push(`/example-posts/${postId}/edit`);
-            }}
-          >
-            <Edit className="mr-2 h-4 w-4" />
-            Edit
-          </DropdownMenuItem>
+          {!withoutEdit && (
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.stopPropagation();
+                void router.push(`/example-posts/${postId}/edit`);
+              }}
+            >
+              <Edit className="mr-2 h-4 w-4" />
+              Edit
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem
             className="text-red-400"
             onClick={(e) => {
