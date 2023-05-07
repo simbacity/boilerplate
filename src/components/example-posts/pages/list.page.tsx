@@ -41,6 +41,7 @@ const ListExamplePostsPage = () => {
             posts.map((data) => (
               <PostItem post={data} user={user} key={data.post.id} />
             ))}
+          <div className="pt-8"></div>
         </div>
       </div>
     </Layout>
