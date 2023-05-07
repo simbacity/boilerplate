@@ -15,12 +15,14 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ActionsDropdown } from "@/components/example-posts/components/actions-dropdown";
 import { Layout } from "@/components/layout/layout";
+import { useUser } from "@clerk/clerk-react";
 
 const EditExamplePostForm = ({ id }: { id: string }) => {
   const router = useRouter();
   const ctx = api.useContext();
   const query = api.examplePost.show.useQuery(id);
   const post = query.data;
+  const { user } = useUser();
   const updateMutation = api.examplePost.update.useMutation({
     onSuccess: async () => {
       toast({
@@ -30,13 +32,38 @@ const EditExamplePostForm = ({ id }: { id: string }) => {
       await ctx.examplePost.invalidate();
       await router.push("/example-posts");
     },
+    onError: (e) => {
+      const errorMessage = e.data?.zodError?.fieldErrors.content;
+      if (errorMessage && errorMessage[0]) {
+        toast({
+          variant: "destructive",
+          description: errorMessage[0],
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          description: "Error! Please try again later.",
+        });
+      }
+    },
   });
 
   const form = useZodForm({
     schema: validationSchemaForUpdateExamplePost,
   });
 
-  if (!post) return <LoadingPage />;
+  if (!post)
+    return (
+      <Layout noPadding fullScreenOnMobile>
+        <LoadingPage />
+      </Layout>
+    );
+
+  const canEdit = user && post.author.id === user.id;
+  if (!canEdit) {
+    void router.push("/example-posts");
+    return <div />;
+  }
 
   return (
     <Layout noPadding fullScreenOnMobile>

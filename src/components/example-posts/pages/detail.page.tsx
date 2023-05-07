@@ -9,10 +9,12 @@ import Link from "next/link";
 
 import { ActionsDropdown } from "@/components/example-posts/components/actions-dropdown";
 import { cn } from "@/lib/utils";
+import { useUser } from "@clerk/clerk-react";
 
 const ExamplePostDetailPage = ({ id }: { id: string }) => {
   const query = api.examplePost.show.useQuery(id);
   const post = query.data;
+  const { user } = useUser();
 
   if (!post)
     return (
@@ -20,6 +22,8 @@ const ExamplePostDetailPage = ({ id }: { id: string }) => {
         <LoadingPage />
       </Layout>
     );
+
+  const canEdit = user && user.id === post.author.id;
 
   return (
     <Layout noPadding fullScreenOnMobile>
@@ -31,11 +35,13 @@ const ExamplePostDetailPage = ({ id }: { id: string }) => {
               Back
             </Button>
           </Link>
-          <ActionsDropdown postId={id}>
-            <div className={cn(buttonVariants({ variant: "ghost" }))}>
-              <MoreHorizontal className="h-4 w-4" />
-            </div>
-          </ActionsDropdown>
+          {canEdit && (
+            <ActionsDropdown postId={id}>
+              <div className={cn(buttonVariants({ variant: "ghost" }))}>
+                <MoreHorizontal className="h-4 w-4" />
+              </div>
+            </ActionsDropdown>
+          )}
         </ActionsTopbar>
         <div className="max-w-2xl p-3 md:px-8 md:py-6">
           <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">

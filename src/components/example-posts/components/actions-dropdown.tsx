@@ -39,6 +39,20 @@ const ActionsDropdown = ({
       await ctx.examplePost.list.invalidate();
       await router.push("/example-posts");
     },
+    onError: (e) => {
+      const errorMessage = e.data?.zodError?.fieldErrors.content;
+      if (errorMessage && errorMessage[0]) {
+        toast({
+          variant: "destructive",
+          description: errorMessage[0],
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          description: "Error! Please try again later.",
+        });
+      }
+    },
   });
   const [isOpen, setIsOpen] = useState(false);
 

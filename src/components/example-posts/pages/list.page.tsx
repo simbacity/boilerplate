@@ -8,10 +8,13 @@ import { MoreHorizontal, Plus } from "lucide-react";
 
 import { ActionsDropdown } from "@/components/example-posts/components/actions-dropdown";
 import { cn } from "@/lib/utils";
-
+import { useUser } from "@clerk/clerk-react";
+import { type UserResource } from "@clerk/types";
+import { useRouter } from "next/router";
 const ListExamplePostsPage = () => {
   const query = api.examplePost.list.useQuery();
   const posts = query.data;
+  const { user } = useUser();
 
   return (
     <Layout>
@@ -33,9 +36,12 @@ const ListExamplePostsPage = () => {
           </Link>
         </div>
         <div className="relative h-full space-y-3 pt-3">
-          {!posts && <LoadingPage />}
+          {(!posts || !user) && <LoadingPage />}
           {posts &&
-            posts.map((data) => <PostItem post={data} key={data.post.id} />)}
+            user &&
+            posts.map((data) => (
+              <PostItem post={data} user={user} key={data.post.id} />
+            ))}
         </div>
       </div>
     </Layout>
@@ -44,53 +50,62 @@ const ListExamplePostsPage = () => {
 
 type ExamplePost = RouterOutputs["examplePost"]["list"][number];
 
-const PostItem = ({ post }: { post: ExamplePost }) => {
+const PostItem = ({
+  post,
+  user,
+}: {
+  post: ExamplePost;
+  user: UserResource;
+}) => {
+  const router = useRouter();
+  const canEdit = post.author.id === user.id;
+
   return (
-    <Link
-      href={`/example-posts/${post.post.id}`}
+    <div
+      className="cursor-pointer rounded-lg border border-muted hover:bg-slate-50"
+      onClick={(e) => {
+        e.stopPropagation();
+        router.push(`/example-posts/${post.post.id}`).catch(console.error);
+      }}
       key={post.post.id}
-      className="block"
     >
       <div
-        className="cursor-pointer rounded-lg border border-muted hover:bg-slate-50"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div
-          className="flex items-start justify-between
+        className="flex items-start justify-between
     "
-        >
-          <div className="p-4">
-            <h4 className="text-md scroll-m-20 font-semibold tracking-tight">
-              {post.post.title}
-            </h4>
-            <div>
-              <p className="text-sm leading-7 [&:not(:first-child)]:mt-6">
-                {post.post.content}
-              </p>
-            </div>
+      >
+        <div className="p-4">
+          <h4 className="text-md scroll-m-20 font-semibold tracking-tight">
+            {post.post.title}
+          </h4>
+          <div>
+            <p className="text-sm leading-7 [&:not(:first-child)]:mt-6">
+              {post.post.content}
+            </p>
           </div>
-          <div className="m-2">
+        </div>
+        <div className="m-2">
+          {canEdit && (
             <ActionsDropdown postId={post.post.id}>
               <div className={cn(buttonVariants({ variant: "ghost" }))}>
                 <MoreHorizontal className="h-4 w-4" />
               </div>
             </ActionsDropdown>
-          </div>
-        </div>
-        <div className="flex items-center gap-1 p-4 pt-2">
-          <Image
-            src={post.author.profileImageUrl}
-            alt="Author"
-            width={18}
-            height={18}
-            className="rounded-full"
-          />
-          <p className="text-xs text-muted-foreground ">
-            {post.author.firstName}
-          </p>
+          )}
         </div>
       </div>
-    </Link>
+      <div className="flex items-center gap-1 p-4 pt-2">
+        <Image
+          src={post.author.profileImageUrl}
+          alt="Author"
+          width={18}
+          height={18}
+          className="rounded-full"
+        />
+        <p className="text-xs text-muted-foreground ">
+          {post.author.firstName}
+        </p>
+      </div>
+    </div>
   );
 };
 
