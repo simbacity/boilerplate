@@ -28,7 +28,7 @@ const ExamplePostDetailPage = ({ id }: { id: string }) => {
     <Layout noPadding fullScreenOnMobile>
       <div>
         <ActionsTopbar>
-          <Link href="/example-posts">
+          <Link href={`/example-posts/#${post.post.id}`}>
             <Button variant="ghost">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back

@@ -85,6 +85,7 @@ const PostItem = ({
 
   return (
     <div
+      id={item.post.id}
       className="cursor-pointer rounded-lg border border-muted hover:bg-slate-50"
       onClick={() =>
         void router.push(`/example-posts/${item.post.id}`).catch(console.error)

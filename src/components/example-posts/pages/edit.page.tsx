@@ -29,7 +29,7 @@ const EditExamplePostForm = ({ id }: { id: string }) => {
       });
 
       await ctx.examplePost.invalidate();
-      await router.push("/example-posts");
+      await router.push(`/example-posts/#${id}`);
     },
     onError: (e) => {
       const errorMessage = e.data?.zodError?.fieldErrors.content;
@@ -72,7 +72,7 @@ const EditExamplePostForm = ({ id }: { id: string }) => {
         )}
       >
         <ActionsTopbar>
-          <Link href="/example-posts">
+          <Link href={`/example-posts/#${post.post.id}`}>
             <Button variant="ghost">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
