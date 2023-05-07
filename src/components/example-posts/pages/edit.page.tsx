@@ -1,19 +1,19 @@
 import { Input } from "@/components/ui/input";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { handlePromise } from "@/lib/promise";
+import { handlePromise } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/lib/api";
 import { useZodForm } from "@/hooks/use-zod-form";
 import { toast } from "@/components/ui/use-toast";
-import { validationSchemaForUpdateExamplePost } from "@/validation-schemas/example-post.schema";
+import { validationSchemaForUpdateExamplePost } from "@/server/api/validation-schemas/example-post.schema";
 import { LoadingPage } from "@/components/ui/loading";
 import { useRouter } from "next/router";
 import { ArrowLeft, Loader2, MoreHorizontal } from "lucide-react";
 import { ActionsTopbar } from "@/components/layout/actions-topbar";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { ActionsDropdown } from "@/components/example-posts/actions-dropdown";
+import { ActionsDropdown } from "@/components/example-posts/components/actions-dropdown";
 
 const EditExamplePostForm = ({ id }: { id: string }) => {
   const router = useRouter();

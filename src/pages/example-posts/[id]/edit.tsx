@@ -1,6 +1,6 @@
 import { Layout } from "@/components/layout/layout";
 import { type NextPage } from "next";
-import { EditExamplePostForm } from "@/components/example-posts/edit-form";
+import { EditExamplePostForm } from "@/components/example-posts/pages/edit.page";
 
 type Props = {
   id: string;

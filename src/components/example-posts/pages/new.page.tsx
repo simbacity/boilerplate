@@ -1,12 +1,12 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { handlePromise } from "@/lib/promise";
+import { handlePromise } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/lib/api";
 import { useZodForm } from "@/hooks/use-zod-form";
 import { toast } from "@/components/ui/use-toast";
-import { validationSchemaForCreateExamplePost } from "@/validation-schemas/example-post.schema";
+import { validationSchemaForCreateExamplePost } from "@/server/api/validation-schemas/example-post.schema";
 import { useRouter } from "next/router";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import Link from "next/link";

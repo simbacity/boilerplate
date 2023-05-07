@@ -2,8 +2,8 @@ import { createTRPCRouter, privateProcedure } from "@/server/api/trpc";
 import {
   validationSchemaForCreateExamplePost,
   validationSchemaForUpdateExamplePost,
-} from "@/validation-schemas/example-post.schema";
-import ExamplePostEntity from "@/business-logic/example-post.entity";
+} from "@/server/api/validation-schemas/example-post.schema";
+import ExamplePostEntity from "@/server/business-logic/example-post.entity";
 import { z } from "zod";
 
 export const examplePostRouter = createTRPCRouter({

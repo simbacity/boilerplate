@@ -21,7 +21,9 @@ const NavigationApp = () => {
         <NavigationDesktop />
       </div>
 
-      <NavigationMobile />
+      <div className="block md:hidden">
+        <NavigationMobile />
+      </div>
     </>
   );
 };

@@ -8,7 +8,7 @@ import { ArrowLeft, MoreHorizontal } from "lucide-react";
 import { ActionsTopbar } from "@/components/layout/actions-topbar";
 import Link from "next/link";
 
-import { ActionsDropdown } from "@/components/example-posts/actions-dropdown";
+import { ActionsDropdown } from "@/components/example-posts/components/actions-dropdown";
 import { cn } from "@/lib/utils";
 
 type Props = {

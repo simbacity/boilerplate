@@ -1,9 +1,9 @@
-import ClerkUserEntity from "@/business-logic/clerk-user.entity";
+import ClerkUserEntity from "@/server/business-logic/clerk-user.entity";
 import { prisma } from "@/server/db";
 import {
   type ValidationSchemaForUpdateExamplePost,
   type ValidationSchemaForCreateExamplePost,
-} from "@/validation-schemas/example-post.schema";
+} from "@/server/api/validation-schemas/example-post.schema";
 import { type ExamplePost } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { type AsyncReturnType } from "type-fest";
