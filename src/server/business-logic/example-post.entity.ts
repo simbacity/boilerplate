@@ -92,7 +92,7 @@ export default class ExamplePostEntity {
       take: limit + 1,
       cursor: cursor ? { id: cursor } : undefined,
       orderBy: {
-        id: "asc",
+        createdAt: "desc",
       },
     });
 
