@@ -1,4 +1,3 @@
-import { Layout } from "@/components/layout/layout";
 import { type NextPage } from "next";
 import { EditExamplePostForm } from "@/components/example-posts/pages/edit.page";
 
@@ -7,11 +6,7 @@ type Props = {
 };
 
 const EditPost: NextPage<Props> = ({ id }: Props) => {
-  return (
-    <Layout noPadding fullScreenOnMobile>
-      <EditExamplePostForm id={id} />
-    </Layout>
-  );
+  return <EditExamplePostForm id={id} />;
 };
 
 export function getServerSideProps(context: { params: Props }) {
