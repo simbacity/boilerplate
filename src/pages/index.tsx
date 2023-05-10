@@ -27,7 +27,7 @@ const Home: NextPage = () => {
       </main>
       <div className="m-auto max-w-5xl px-12 pt-12 2xl:max-w-7xl">
         <Image
-          src="/static/screenshot-app.png"
+          src="/screenshot-app.png"
           alt="screenshot of app"
           width={2310}
           height={1118}
