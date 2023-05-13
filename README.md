@@ -1,28 +1,25 @@
-# Create T3 App
+## Setup the project
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+1. Create `.env` file  (copy `.env.example`)
+2. Create postgres database (e.g. via https://www.elephantsql.com/)
+3. Sign up to https://clerk.com/ and add your api keys to env file
+4. Run `npm i`
+5. Run `npm prisma db push`
+6. Run `npm run dev`
 
-## What's next? How do I make an app with this?
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Useful resources
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+This project uses the t3stack. You can read the documentation here https://create.t3.gg/en/introduction
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+We also recommend to learn about trpc (https://trpc.io/docs/) and tansack query (used by trpc under the hood) (https://tanstack.com/query/latest/docs/react/overview)
 
-## Learn More
+## Useful commands
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+npx prisma studio (starts the data browser) https://www.prisma.io/docs/concepts/components/prisma-studio
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+Sometimes the linter breaks and you get errors that shouldn't be there. When experiencing this you need to restart the `es-lint server` or `typescript server` in VS code:
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+`CMD` + `p`, then enter `> restart`
 
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+<img width="631" alt="image" src="https://github.com/simbacity/boilerplate/assets/98182227/2aedb802-29a2-4702-b634-312e366f5ec8">
