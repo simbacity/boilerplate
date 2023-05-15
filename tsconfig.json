@@ -28,7 +28,7 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    "middleware.ts"
+    "src/middleware.ts"
   ],
   "exclude": ["node_modules"]
 }
