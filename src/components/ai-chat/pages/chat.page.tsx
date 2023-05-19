@@ -1,5 +1,5 @@
-import useScrollToBottom from "@/components/ai-chat-messages/hooks/use-scroll-to-bottom";
-import useTextareaToChatInput from "@/components/ai-chat-messages/hooks/use-textarea-to-chat-input";
+import useScrollToBottom from "@/components/ai-chat/hooks/use-scroll-to-bottom";
+import useTextareaToChatInput from "@/components/ai-chat/hooks/use-textarea-to-chat-input";
 import { Layout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,7 +21,7 @@ import {
 import { Loader2, Send } from "lucide-react";
 import { useRef, useState } from "react";
 
-const ListAiChatMessagesPage = () => {
+const ChatPage = () => {
   const messagesContainerRef = useRef<HTMLElement | null>(null);
   const messageInputRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -56,11 +56,8 @@ const ListAiChatMessagesPage = () => {
     };
 
     form.setValue("message", "");
-
     onSubmitMessage(data.message);
-
     scrollToBottom(100).catch(console.error);
-
     chatCompletionMutation.mutate(paramsForRequest);
   };
 
@@ -163,4 +160,4 @@ const useChatMessages = () => {
   };
 };
 
-export default ListAiChatMessagesPage;
+export default ChatPage;

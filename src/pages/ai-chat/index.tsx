@@ -1,8 +1,8 @@
 import { type NextPage } from "next";
-import ListAiChatMessagesPage from "@/components/ai-chat-messages/pages/list.page";
+import ChatPage from "@/components/ai-chat/pages/chat.page";
 
-const ListAiChatMessages: NextPage = () => {
-  return <ListAiChatMessagesPage />;
+const AIChat: NextPage = () => {
+  return <ChatPage />;
 };
 
-export default ListAiChatMessages;
+export default AIChat;
