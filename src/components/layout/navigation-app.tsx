@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 const MENU_ITEMS = Object.freeze([
   { label: "Overview", path: "/dashboard" },
   { label: "Example Post", path: "/example-posts" },
+  { label: "Example AI Chat", path: "/ai-chat" },
 ]);
 
 const NavigationApp = () => {
